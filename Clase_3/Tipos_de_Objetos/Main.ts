@@ -221,15 +221,15 @@
 // // mediante "as tipo" podemos decirle al compilador que esto es siempre string
 // console.log((x.contenido as string).toLocaleLowerCase());
 //Otro posible enfoque es poder utilizar un tipo para cada uno de los casos.
-interface CajaNumber {
-  contenido: number;
-}
-interface CajaString {
-  contenido: string;
-}
-interface CajaBoolean {
-  contenido: boolean;
-}
+// interface CajaNumber {
+//   contenido: number;
+// }
+// interface CajaString {
+//   contenido: string;
+// }
+// interface CajaBoolean {
+//   contenido: boolean;
+// }
 // Sin embargo esto implica que tendremos que crear diferentes funciones/sobrecarga, para poder operar con cada uno de estos tipos.
 // function setContenido(caja: CajaNumber, nuevoContenido: string): void;
 // function setContenido(caja: CajaString, nuevoContenido: number): void;
