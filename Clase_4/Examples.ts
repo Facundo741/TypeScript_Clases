@@ -154,42 +154,154 @@
 // ### 10. Type Manipulation, operador typeof
 // **Enunciado**: Define una variable de tipo objeto con varias propiedades. Luego, crea un tipo que utilice `typeof` para capturar el tipo de esa variable y define una función que acepte parámetros de ese tipo.
 
-const miObjeto = { nombre: "Facundo", edad: 23, estado: true }; 
-type TipoDeMiObjeto = typeof miObjeto; 
-function imprimirPropiedades(objeto: TipoDeMiObjeto): void { 
-  console.log(`Nombre: ${objeto.nombre}`); 
-  console.log(`Edad: ${objeto.edad}`); 
-  console.log(`Estado: ${objeto.estado}`); 
-} 
-imprimirPropiedades(miObjeto);
+// const miObjeto = { nombre: "Facundo", edad: 23, estado: true }; 
+// type TipoDeMiObjeto = typeof miObjeto; 
+// function imprimirPropiedades(objeto: TipoDeMiObjeto): void { 
+//   console.log(`Nombre: ${objeto.nombre}`); 
+//   console.log(`Edad: ${objeto.edad}`); 
+//   console.log(`Estado: ${objeto.estado}`); 
+// } 
+// imprimirPropiedades(miObjeto);
 
 
 // ### 11. Type Manipulation, Indexed Access Types (Tipos basados en índices)
 // **Enunciado**: Define un tipo que represente un libro con propiedades como `título`, `autor` y `año`. Luego, crea una función que tome un arreglo de libros y devuelva un arreglo de los títulos de los libros utilizando tipos basados en índices.
 
+// type Libro = { 
+//   titulo: string; 
+//   autor: string; 
+//   anio: number
+// };
+// const libros: Libro[] = [
+//   { titulo: 'El Quijote', autor: 'Miguel de Cervantes', anio: 1605 },
+//   { titulo: 'To Kill a Mockingbird', autor: 'Harper Lee', anio: 1960 },
+//   { titulo: '1984', autor: 'George Orwell', anio: 1949 },
+// ];
+// function getTitulosDeLibros(libros: Libro[]): Libro['titulo'][] {
+//   return libros.map(libro => libro.titulo);
+// }
+// const titulos = getTitulosDeLibros(libros);
+// console.log(titulos);
+
+
 // ### 12. Type Manipulation, Conditional Types (Tipos condicionales)
 // **Enunciado**: Crea un tipo condicional que tome dos tipos `A` y `B`, y defina un tipo que sea `true` si `A` es asignable a `B` y `false` en caso contrario.
+
+// type esAsignable<A, B> = A extends B ? true : false;
+// type Test1 = EsAsignable<string, string>;  // true
+// type Test2 = EsAsignable<string, number>;  // false
+// type Test3 = EsAsignable<number, any>;     // true
+// type Test4 = EsAsignable<any, number>;     // false
+// type Test5 = EsAsignable<{ a: number }, { a: number }>; // true
+// type Test6 = EsAsignable<{ a: number }, { a: string }>; // false
+// type Test7 = EsAsignable<never, string>;  // true
+
 
 // ### 13. Type Manipulation, Conditional Type Constraints (Restricciones en tipos condicionales)
 // **Enunciado**: Define un tipo condicional que verifique si un tipo es un arreglo y, de ser así, devuelva el tipo de los elementos del arreglo; de lo contrario, devuelva el tipo original.
 
+// type EsArreglo<T> = T extends (infer U)[] ? U : T;
+// type Test1 = EsArreglo<string[]>;  // string
+// type Test2 = EsArreglo<number[]>;  // number
+// type Test3 = EsArreglo<boolean>;   // boolean
+// type Test4 = EsArreglo<{ a: number }[]>; // { a: number }
+// type Test5 = EsArreglo<string>;    // string
+
+
 // ### 14. Type Manipulation, Inferencia en Conditional Types
 // **Enunciado**: Crea un tipo condicional que tome un tipo `T` y use la inferencia para determinar si `T` es una promesa. Si es una promesa, el tipo debe ser el tipo resuelto de la promesa; de lo contrario, debe ser `T`.
+
+// type ResolvedType<T> = T extends Promise<infer U> ? U : T;
+// type Test1 = ResolvedType<Promise<string>>;  // string
+// type Test2 = ResolvedType<Promise<number>>;  // number
+// type Test3 = ResolvedType<string>;           // string
+// type Test4 = ResolvedType<number>;           // number
+// type Test5 = ResolvedType<Promise<boolean>>; // boolean
+// type Test6 = ResolvedType<boolean>;          // boolean
+
 
 // ### 15. Type Manipulation, Distributive Conditional Types (Tipos condicionales distributivos)
 // **Enunciado**: Define un tipo condicional distributivo que tome un tipo union y devuelva `true` si alguno de los tipos en la union es una cadena (`string`).
 
+// type ContainsString<T> = T extends string ? true : false;
+// type UnionContainsString<U> = U extends any ? ContainsString<U> : never;
+// type Result1 = UnionContainsString<string | number>;  // true | false
+// type Result2 = UnionContainsString<number | boolean>; // false
+// type Result3 = UnionContainsString<string | boolean>; // true | false
+// type Result4 = UnionContainsString<string>;           // true
+// type Result5 = UnionContainsString<number>;           // false
+
+
 // ### 16. Type Manipulation, Mapped Types (Tipos basados en mapas)
 // **Enunciado**: Crea un tipo mapeado que convierta todas las propiedades de un tipo `T` en opcionales (`optional`).
+
+// type MakeOptional<T> = {
+//   [P in keyof T]?: T[P];
+// };
+// type OriginalType = {
+//   a: number;
+//   b: string;
+//   c: boolean;
+// };
+// type OptionalType = MakeOptional<OriginalType>;
+// const example: OptionalType = {
+//   a: 42,
+// };
+
 
 // ### 17. Type Manipulation, Mapped Types, Modifiers (Modificadores en mapas basados en tipos)
 // **Enunciado**: Define un tipo mapeado que haga todas las propiedades de un tipo `T` solo lectura (`readonly`).
 
+// type MakeReadonly<T> = {
+//   readonly [P in keyof T]: T[P];
+// };
+// type OriginalType = {
+//   a: number;
+//   b: string;
+//   c: boolean;
+// };
+// type ReadonlyType = MakeReadonly<OriginalType>;
+// const example: ReadonlyType = {
+//   a: 42,
+// };
+
+
 // ### 18. Type Manipulation, Mapped Types, Key Remapping (Re-mapeado de propiedades)
 // **Enunciado**: Crea un tipo mapeado que remapee las claves de un objeto a sus valores, pero en minúsculas. Por ejemplo, un objeto `{ A: string; B: number; }` debe ser remapeado a `{ a: string; b: number; }`.
+
+// type RemapKeysToLowercase<T> = {
+//   [K in keyof T as K extends string ? Lowercase<K> : never]: T[K];
+// };
+// type OriginalType = {
+//   A: string;
+//   B: number;
+// };
+// type RemappedType = RemapKeysToLowercase<OriginalType>;
+// const example: RemappedType = {
+//   a: 42,
+// };
+
 
 // ### 19. Type Manipulation, Template Literal Types (Tipos literales de plantilla)
 // **Enunciado**: Define un tipo literal de plantilla que tome dos cadenas de texto y las combine en una nueva cadena de texto. Por ejemplo, dado `Type1` y `Type2`, el resultado debe ser `Type1Type2`.
 
+// type CombineStrings<S1 extends string, S2 extends string> = `${S1}${S2}`;
+// type Combined = CombineStrings<'Type1', 'Type2'>;
+
+
 // ### 20. Type Manipulation, Intrinsic String Manipulation Types (Tipos intrínsecos de manipulación de strings)
 // **Enunciado**: Utiliza tipos intrínsecos de manipulación de strings para definir un tipo que convierta todas las propiedades de un tipo `T` a camelCase.
+
+// type CamelCase<S extends string> =
+//   S extends `${infer P1}_${infer P2}${infer P3}`
+//     ? `${Lowercase<P1>}${Uppercase<P2>}${CamelCase<P3>}`
+//     : S;
+// type ConvertToCamelCase<T> = {
+//   [K in keyof T as CamelCase<string & K>]: T[K];
+// };
+// type OriginalType = {
+//   first_name: string;
+//   last_name: string;
+//   user_age: number;
+// };
+// type CamelCaseType = ConvertToCamelCase<OriginalType>;
